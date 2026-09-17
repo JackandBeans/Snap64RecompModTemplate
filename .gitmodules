@@ -1,0 +1,6 @@
+[submodule "pokemonsnap"]
+	path = pokemonsnap
+	url = https://github.com/ethteck/pokemonsnap.git
+[submodule "Snap64RecompSyms"]
+	path = Snap64RecompSyms
+	url = https://github.com/JackandBeans/Snap64RecompSyms.git

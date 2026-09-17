@@ -1,0 +1,64 @@
+# The example mod's configuration: what goes in its manifest, and where the
+# mod tool finds its inputs. Change the ids and names for a mod of your own.
+
+[manifest]
+
+# Unique id. Long enough never to collide with another mod; the name players
+# see is display_name, so this one need not read well.
+id = "snap64_recomp_mod_template"
+
+version = "1.0.0"
+
+# What the mod menu shows.
+display_name = "Snap64 Recomp Mod Template"
+
+description = """
+An example mod for Snap64 Recomp, and a template for writing one. When it \
+is enabled and its option is on, it writes a line to the port's log each \
+time the game sets up a scene: the title, the lab, a course.
+
+Source and instructions: https://github.com/JackandBeans/Snap64RecompModTemplate"""
+
+# One line, for the mod list; it is cut short if it runs long.
+short_description = "Says hello in the log each time a scene is set up."
+
+authors = [ "Your name here" ]
+
+# The game this mod is for. Snap64 Recomp registers itself as pokemonsnap.
+game_id = "pokemonsnap"
+
+# The oldest release of the port this mod runs on.
+minimum_recomp_version = "1.0.8"
+
+# Other mods this one needs, as "id" or "id:1.2.3" for a minimum version.
+dependencies = [
+]
+
+optional_dependencies = [
+]
+
+# Native libraries built alongside the mod, if any.
+native_libraries = [
+]
+
+[inputs]
+# The MIPS ELF the Makefile produces.
+elf_path = "build/mod.elf"
+# The .nrm's file name, without the extension.
+mod_filename = "snap64_recomp_mod_template"
+# The game's symbols, from the Snap64RecompSyms repository checked out beside
+# this one (a submodule here): functions, and the data a mod may name.
+func_reference_syms_file = "Snap64RecompSyms/pokemonsnap.us.syms.toml"
+data_reference_syms_files = [ "Snap64RecompSyms/pokemonsnap.us.datasyms.toml" ]
+# Files to pack into the .nrm beside the code.
+additional_files = [ ]
+
+# Options the player can set in the mod's configuration. Each has an id the
+# code reads it by (recompconfig.h), a name and a description for the menu,
+# a type, and a default.
+[[manifest.config_options]]
+id = "greeting"
+name = "Greeting in the log"
+description = "Write a line to snap64.log each time the game sets up a scene."
+type = "Bool"
+default = true
