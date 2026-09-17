@@ -15,10 +15,10 @@ and it can read options the player sets in the port. Mods are the same
 * `Makefile`, `mod.ld` -- the MIPS build, with clang and lld.
 * `include/` -- the modding headers: `modding.h` (the hook and patch
   macros), `recomputils.h` (printing and memory), `recompconfig.h` (reading
-  the mod's options). The other recompilations' `recompdata.h` (arrays and
-  maps kept between calls) and `recompui.h` (menus a mod draws) are not
-  here: the port does not provide those functions yet, and a mod that
-  imports them does not load.
+  the mod's options), `recompdata.h` (the hashmaps, hashsets and slotmaps a
+  mod keeps between calls, held by the port). The other recompilations'
+  `recompui.h` (menus a mod draws) is not here: the port does not provide
+  those functions yet, and a mod that imports them does not load.
 * `pokemonsnap/` -- the game's decompilation, as a submodule, for its headers
   and its function and variable names. `Snap64RecompSyms/` -- the symbol
   files the mod tool resolves those names with, as a submodule.
@@ -60,7 +60,9 @@ decompilation's type and use it.
 
 Options go in `mod.toml` under `[[manifest.config_options]]` and are read
 with the functions in `recompconfig.h`. `recomp_printf` writes to the port's
-log, `snap64.log`.
+log, `snap64.log`. `recompdata.h` gives a mod hashmaps, hashsets and
+slotmaps that live for the run; the example keeps a set of the scenes it
+has seen in one.
 
 A few of the game's functions are already wrapped by the port itself (the
 ride camera's two processes, the effect system's particle draw, the
