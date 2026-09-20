@@ -1,0 +1,53 @@
+# Builds and packs the example from a clean clone, the way the README says
+# to: clang and lld for the MIPS code, RecompModTool built from N64Recomp at
+# the commit the port itself is built against, zip for the .nrm. What it
+# proves is that the template, its two submodules and the documented steps
+# still fit together; whether the port loads the result is checked by hand
+# against a release (README, "What has been checked").
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: The example, built and packed
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: The tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang lld make zip unzip cmake ninja-build
+          clang --version | head -1
+          ld.lld --version | head -1
+
+      - name: The mod's code
+        run: make
+
+      - name: The mod tool, from N64Recomp's source
+        run: |
+          git clone --recurse-submodules https://github.com/N64Recomp/N64Recomp.git "$RUNNER_TEMP/N64Recomp"
+          cd "$RUNNER_TEMP/N64Recomp"
+          git checkout ffb39cdad1da5de07eaaa48bd1db4a89a7986771
+          git submodule update --init --recursive
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --target RecompModTool
+
+      - name: The .nrm
+        run: |
+          "$RUNNER_TEMP/N64Recomp/build/RecompModTool" mod.toml build
+          ls -l build/*.nrm
+          unzip -l build/snap64_recomp_mod_template.nrm
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: snap64_recomp_mod_template
+          path: build/snap64_recomp_mod_template.nrm
+          if-no-files-found: error
