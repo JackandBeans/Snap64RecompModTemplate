@@ -44,8 +44,9 @@ and it can read options the player sets in the port. Mods are the same
 
 `build/snap64_recomp_mod_template.nrm` is the mod. Put it in the `mods/`
 folder next to `Snap64Recomp.exe` (or the Linux binary) and start the port:
-the log names it as it loads, and the mod menu, when the port has one, lists
-it. Until then `mods.json` beside the folder says which mods are enabled.
+the log names it as it loads, and the port's Mods page (Options > Mods, since
+1.0.9) lists it, turns it on or off and opens its options; `mods.json` beside
+the folder records which mods are enabled.
 
 ## Writing a mod
 
@@ -65,8 +66,8 @@ slotmaps that live for the run; the example keeps a set of the scenes it
 has seen in one.
 
 A few of the game's functions are already wrapped by the port itself (the
-ride camera's two processes, the effect system's particle draw, the
-Pokémon add routines and a handful more, listed in the port's
+effect system's particle draw, the Pokémon add routines and a handful
+more, listed in the port's
 `tools/hook_funcs.py`); a hook on one of those still runs, on the port's
 wrapper.
 
