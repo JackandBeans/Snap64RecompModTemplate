@@ -23,6 +23,9 @@ A mod built from this template needs Snap64 Recomp 1.0.9 or later.
 * `pokemonsnap/` -- the game's decompilation, as a submodule, for its headers
   and its function and variable names. `Snap64RecompSyms/` -- the symbol
   files the mod tool resolves those names with, as a submodule.
+* `thunderstore/` -- the mod's Thunderstore page (`README.md`), its
+  changelog and a placeholder icon, and `tools/pack_thunderstore.py`, which
+  packs them with the `.nrm` (see "Publishing").
 * `.github/workflows/build.yml` -- builds and packs the example on every
   push, from a clean clone, the way the section below says to.
 
@@ -68,7 +71,9 @@ read for its headers and needs no build of its own.
 ## Installing it
 
 Put the `.nrm` in the `mods/` folder next to `Snap64Recomp.exe` (or the
-Linux binary) and start the port. A mod is turned on the first time the port
+Linux binary) and start the port. From 1.1.0 the port also takes the `.nrm`,
+or the Thunderstore zip, dropped on its window, and unpacks a zip left in
+`mods/`; either way the mod loads at the next start. A mod is turned on the first time the port
 finds it; the log, `snap64.log`, names it as it opens and loads it, and the
 example writes its line each time the game sets up a scene. The port's Mods
 page (Options > Mods; Esc, or Select on a pad, opens the Options anywhere)
@@ -106,12 +111,44 @@ Two things the port does that a mod meets:
   wrapped by the port rather than replaced (the effect system's particle
   draw, the Pokémon add routines and a handful more, listed in the port's
   `tools/hook_funcs.py`); a hook on one of those still runs, on the port's
-  wrapper.
+  wrapper. A hook (`RECOMP_HOOK`, `RECOMP_HOOK_RETURN`) on a function the
+  port replaces works from 1.1.0.
+* **At 1.0.9 three kinds of hook failed**: a hook on a function that calls
+  the game's `memcpy`, on a function the port replaces, and on a function
+  that waits a frame (`ohWait`, which most of the game's processes do; the
+  game stopped when the process ended). 1.1.0 fixes all three. A mod with
+  such a hook should ask for 1.1.0 in `minimum_recomp_version`.
 * **`minimum_recomp_version` is checked against the port's own version.**
   1.0.9 is the first release that provides `recomp_printf` and the
   collections, so it is the lowest that makes sense here; a mod that asks
   for a release newer than the player's is refused with a message that
   names the version it wants.
+
+## Publishing
+
+Thunderstore is where the other N64 recompilations list their mods. A
+Thunderstore package is a zip with a `manifest.json`, a `README.md` (the
+package's page) and a 256x256 `icon.png` at its root, beside the mod.
+
+1. Edit `thunderstore/README.md` and `thunderstore/CHANGELOG.md`, and
+   replace `thunderstore/icon.png` (the placeholder is the port's film
+   canister with a plus).
+2. Build the mod, then run
+
+       python tools/pack_thunderstore.py --team YourTeam --website https://github.com/you/your-mod
+
+   The zip lands in `dist/`, named `YourTeam-Name-1.0.0.zip`: the package's
+   name is `display_name` with spaces as underscores, its description
+   `short_description` (Thunderstore takes 250 characters), and its version
+   the mod's `version`.
+3. Upload it at <https://thunderstore.io/package/create/> under your team.
+
+Snap64 Recomp has no Thunderstore community yet; until it has, a GitHub
+release carrying the `.nrm` and the zip does the same job. Mod managers do
+not support the port, so a package's page should tell players to use
+Manual Download, as the other recompilations' pages do. The port's Mods page
+shows `short_description` on one line of about 45 characters, so a short one
+reads whole there.
 
 ## What has been checked
 

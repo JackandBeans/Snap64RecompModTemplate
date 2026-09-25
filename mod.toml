@@ -30,7 +30,9 @@ game_id = "pokemonsnap"
 # The oldest release of the port this mod runs on. 1.0.9 is the first that
 # provides recomp_printf and the collections of recompdata.h, which the
 # example uses; the port refuses a mod that asks for a release newer than
-# itself, with a message naming the version.
+# itself, with a message naming the version. Ask for 1.1.0 if the mod hooks
+# a function that calls the game's memcpy, one the port replaces, or one
+# that waits a frame: those hooks fail on 1.0.9.
 minimum_recomp_version = "1.0.9"
 
 # Other mods this one needs, as "id" or "id:1.2.3" for a minimum version.

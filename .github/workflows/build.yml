@@ -1,8 +1,9 @@
 # Builds and packs the example from a clean clone, the way the README says
 # to: clang and lld for the MIPS code, RecompModTool built from N64Recomp at
-# the commit the port itself is built against, zip for the .nrm. What it
-# proves is that the template, its two submodules and the documented steps
-# still fit together; whether the port loads the result is checked by hand
+# the commit the port itself is built against, zip for the .nrm, and
+# tools/pack_thunderstore.py for the Thunderstore zip. What it proves is
+# that the template, its two submodules and the documented steps still fit
+# together; whether the port loads the result is checked by hand
 # against a release (README, "What has been checked").
 name: build
 
@@ -46,8 +47,15 @@ jobs:
           ls -l build/*.nrm
           unzip -l build/snap64_recomp_mod_template.nrm
 
+      - name: The Thunderstore package
+        run: |
+          python3 tools/pack_thunderstore.py --team YourTeam --website "https://github.com/${{ github.repository }}"
+          unzip -l dist/*.zip
+
       - uses: actions/upload-artifact@v4
         with:
           name: snap64_recomp_mod_template
-          path: build/snap64_recomp_mod_template.nrm
+          path: |
+            build/snap64_recomp_mod_template.nrm
+            dist/*.zip
           if-no-files-found: error
