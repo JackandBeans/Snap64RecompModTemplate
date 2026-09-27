@@ -71,7 +71,8 @@ read for its headers and needs no build of its own.
 ## Installing it
 
 Put the `.nrm` in the `mods/` folder next to `Snap64Recomp.exe` (or the
-Linux binary) and start the port. From 1.1.0 the port also takes the `.nrm`,
+Linux binary; on a Mac, the `mods/` folder in
+`~/Library/Application Support/Snap64 Recomp/`) and start the port. From 1.1.0 the port also takes the `.nrm`,
 or the Thunderstore zip, dropped on its window, and unpacks a zip left in
 `mods/`; either way the mod loads at the next start. A mod is turned on the first time the port
 finds it; the log, `snap64.log`, names it as it opens and loads it, and the

@@ -11,5 +11,6 @@ writes a line to the port's log each time the game sets up a scene.
 
 Mod managers do not support Snap64 Recomp. Use **Manual Download** on this
 page, then drop the downloaded zip on the game window, or put the zip in the
-`mods` folder beside `Snap64Recomp.exe` (Snap64 Recomp 1.1.0 or later). The
+port's `mods` folder, beside `Snap64Recomp.exe` or on a Mac in
+`~/Library/Application Support/Snap64 Recomp/` (Snap64 Recomp 1.1.0 or later). The
 mod loads the next time the game starts. Options > Mods turns it on or off.
