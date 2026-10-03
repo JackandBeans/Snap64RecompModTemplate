@@ -92,7 +92,7 @@ function of the same name and signature. The names are the decompilation's:
 and `Snap64RecompSyms/pokemonsnap.us.syms.toml` lists every function the
 tool knows. Game variables are named too (`pokemonsnap.us.datasyms.toml`);
 declare one `extern` with the decompilation's own type, exactly -- a
-variable declared wider than it is reads and writes its neighbours -- and
+variable declared wider than it is reads and writes its neighbors -- and
 use it. The game's headers (`common.h`, `sys/om.h` and the rest) include
 as they are.
 
@@ -165,7 +165,7 @@ then forced), and a manifest asking for a newer port (refused, with the
 message). Not checked: the Windows and macOS tool lines above, the published
 RecompModTool binary, native libraries, and dependencies between mods.
 
-## Licence
+## License
 
 This template is GPLv3, like the port. `modding.h`, `recomputils.h` and
 `recompconfig.h` are the files of Zelda64Recomp's
@@ -175,5 +175,5 @@ template is CC0. `recompdata.h` declares the same functions as the other
 recompilations' header of that name, which the port provides. The
 decompilation this reads headers from,
 [ethteck/pokemonsnap](https://github.com/ethteck/pokemonsnap), carries no
-licence file; it is checked out in place rather than copied, as the other
+license file; it is checked out in place rather than copied, as the other
 recompilations' templates do, and nothing of the game is in this repository.
