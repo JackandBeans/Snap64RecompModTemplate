@@ -100,6 +100,10 @@ Options go in `mod.toml` under `[[manifest.config_options]]` and are read
 with the functions in `recompconfig.h`. `recomp_printf` writes to the port's
 log, `snap64.log`. `recompdata.h` gives a mod hashmaps, hashsets and
 slotmaps that live for the run; the example keeps a set in one.
+`snap64.h` is the port's own: the computer's clock and calendar
+(`snap64_local_time`, `snap64_local_date`), which the cartridge never had.
+A mod that imports them needs Snap64 Recomp 1.1.3 or later; say so in
+`minimum_recomp_version`.
 
 Two things the port does that a mod meets:
 
