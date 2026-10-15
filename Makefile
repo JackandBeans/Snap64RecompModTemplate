@@ -19,8 +19,10 @@ endif
 TARGET  := $(BUILD_DIR)/mod.elf
 
 LDSCRIPT := mod.ld
+# -fno-builtin-memcpy, -memmove and -bcopy: clang otherwise turns a plain copy
+# into a call to memmove, which the game does not have.
 ARCHFLAGS := -target mips -mips2 -mabi=32 -O2 -G0 -mno-abicalls -mno-odd-spreg -mno-check-zero-division \
-             -fomit-frame-pointer -ffast-math -fno-unsafe-math-optimizations -fno-builtin-memset -funsigned-char -fno-builtin-sinf -fno-builtin-cosf
+             -fomit-frame-pointer -ffast-math -fno-unsafe-math-optimizations -fno-builtin-memset -fno-builtin-memcpy -fno-builtin-memmove -fno-builtin-bcopy -funsigned-char -fno-builtin-sinf -fno-builtin-cosf
 WARNFLAGS := -Wall -Wextra -Wno-incompatible-library-redeclaration -Wno-unused-parameter -Wno-unknown-pragmas -Wno-unused-variable \
              -Wno-missing-braces -Wno-unsupported-floating-point-opt -Werror=section -Wno-visibility
 CFLAGS   := $(ARCHFLAGS) $(WARNFLAGS) -D_LANGUAGE_C -nostdinc -ffunction-sections
